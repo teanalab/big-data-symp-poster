@@ -66,6 +66,9 @@
 
 \usepackage{pdfpages}
 
+
+\usepackage{subfigure}
+
 \usepackage{tikz}
 \usetikzlibrary{matrix}
 
@@ -171,8 +174,13 @@ cross/.default={1pt}}
 
 \setbeamercolor{block alerted body}{fg=black,bg=white} % Change the alert block body colors
 
-\begin{alertblock}{a}
-a
+\begin{alertblock}{The first three iterations\ldots}
+  \begin{figure}[!htb]
+  \centering
+  \subfigure[1$^{\rm st}$ Iteration]{\label{fig:smooth:a}\includegraphics[width=0.3\textwidth]{../intgr-cds-acm-version/images/optIter1Htbigramprf.eps}}
+  \subfigure[2$^{\rm nd}$ Iteration]{\label{fig:smooth:b}\includegraphics[width=0.3\textwidth]{../intgr-cds-acm-version/images/optIter2Htbigramprf.eps}}
+  \subfigure[3$^{\rm rd}$ Iteration]{\label{fig:smooth:c}\includegraphics[width=0.3\textwidth]{../intgr-cds-acm-version/images/optIter3Htbigramprf.eps}}
+  \end{figure}
 \end{alertblock}
 
 \begin{alertblock}{a}
