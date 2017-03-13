@@ -69,6 +69,8 @@
 
 \usepackage{subfigure}
 
+\usepackage{algorithm,algorithmic}
+
 \usepackage{tikz}
 \usetikzlibrary{matrix}
 
@@ -158,6 +160,29 @@ cross/.default={1pt}}
 
 \end{block}
 
+\begin{block}{Optimization Problem}
+  \begin{itemize}
+
+\item Sample infNDCG for the following values of $w_\phi$:
+\begin{equation*}
+\mathbf{w}_{s,\phi}=[w_{\phi,-M},\dots, w_{\phi,0}, \dots, w_{\phi,M}]
+\end{equation*}
+
+\item Using the fixed sampling interval ($\Delta w_\phi$):
+\begin{equation*}
+w_{\phi,m}=w_{\phi,0}+m\Delta w_\phi, \; m\in[-M,\dots, M]
+\end{equation*}
+
+
+\item Polynomial of degree $K$ is used for smoothing the objective function:
+\begin{equation*}
+\tilde E(w_{\phi,m})=\sum_{k=0}^{K} a_{k} {m}^k, \quad m\in[-M,\dots, M]
+\end{equation*}
+
+\end{itemize}
+\end{block}
+
+
 %------------------------------------------------
 
 
@@ -172,6 +197,14 @@ cross/.default={1pt}}
 
 \setbeamercolor{block alerted body}{fg=black,bg=white} % Change the alert block body colors
 
+\begin{alertblock}{Proposed Method}
+  \begin{itemize}
+\item Represent verbose \textbf{domain-specific } queries using weighted unigram, bigram and multi-term concepts in a query itself, top retrieved documents and knowledge bases.
+\item Leverage \textbf{Graduated Non-Convexity Optimization (GNC)} method to jointly determine the importance weights for the query and expansion concepts depending on their type and source.
+\end{itemize}
+\end{alertblock}
+
+
 \begin{alertblock}{The first three iterations\ldots}
   \begin{figure}[!htb]
   \centering
@@ -181,9 +214,12 @@ cross/.default={1pt}}
   \end{figure}
 \end{alertblock}
 
-\begin{alertblock}{a}
-
-a
+\begin{alertblock}{ Sources of Latent Concepts for Query Expansion}
+\begin{itemize}
+\item Top retrieved documents
+\item External domain-specific knowledge repositories (e.g., UMLS)
+\item External general-purpose resources (e.g., Wikipedia)
+\end{itemize}
 
 \end{alertblock}
 
@@ -220,7 +256,30 @@ a
 
 
 
-\begin{alertblock}{Important Result}
+\begin{alertblock}{Algorithm}
+
+\begin{algorithm}[H]
+\scriptsize
+\begin{algorithmic}[1]
+    \STATE{Identify explicit and latent concepts}
+    \STATE{Randomly initialize the feature weights vector ($\mathbf{w}_\phi$)}
+    \FOR{$j=1:j_{\max}$}
+          \STATE{Randomly shuffle $\mathbf{w}_\phi$}
+        \FOR{$n=1:N$}
+            \FOR{each sampling policy}
+                \STATE{Sample $E^{n,j}(w_{\phi}^{n})$}
+                \STATE{Obtain $\tilde E^{n,j}(w_{\phi,m}^{n})$}
+                \STATE{Obtain the optimum point  $\hat w_{\phi}^{n}$}
+                   \STATE{Update $n$-th element of $\mathbf{w}_\phi$ by $\hat w_{\phi}^{n}$}
+            \ENDFOR{}
+        \ENDFOR{}
+        \IF{Convergence}
+               \STATE{Break}
+        \ENDIF{}
+      \ENDFOR{}
+\end{algorithmic}
+\end{algorithm}
+
 
 
 
@@ -286,9 +345,13 @@ a
 %	CONCLUSION
 %----------------------------------------------------------------------------------------
 
-\begin{block}{Conclusion}
-
-a
+\begin{block}{Conclusions}
+\begin{itemize}
+\item We proposed a method to represent CDS queries using explicit concepts from the original query and the latent concepts from the top retrieved documents and knowledge bases
+\item We proposed the features to individually weigh each query concept depending on its type and source
+\item We proposed to use graduated optimization method to directly optimize the parameters of the concept based retrieval model with respect to the target retrieval metric
+\item Proposed method significantly outperforms state-of-the-art baselines as well as best systems in CDS track of TREC 2014 and 2015
+\end{itemize}
 
 \end{block}
 
